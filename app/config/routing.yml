@@ -1,0 +1,8 @@
+_welcome:
+    pattern:  /
+    defaults: { _controller: AcmeOrderBundle:Order:index }
+
+_order:
+    resource: "@AcmeOrderBundle/Controller/OrderController.php"
+    type:     annotation
+    prefix:   /order

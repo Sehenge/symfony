@@ -1,9 +1,20 @@
 {% extends "AcmeOrderBundle::layout.html.twig" %}
 
-{% block title "Hello " ~ name %}
+{% block title "Symfony " ~ name %}
 
 {% block content %}
-    <h1>Hello {{ name }}!</h1>
-{% endblock %}
+    <h1>Product <em>{{ model }}  -- {{ color_code }} -- {{ size }}</em> is <strong>{{ name }}</strong>!</h1>
 
-{% set code = code(_self) %}
+    <div class="symfony-blocks-welcome">
+        <form action="{{ path('_order_hello') }}" method="POST" id="contact_form">
+            {{ form_errors(form) }}
+
+            {{ form_row(form.model) }}
+            {{ form_row(form.color_code) }}
+            {{ form_row(form.size) }}
+
+            {{ form_rest(form) }}
+            <input type="submit" value="Send" class="symfony-button-grey" />
+        </form>
+    </div>
+{% endblock %}

@@ -5,12 +5,13 @@ namespace Acme\OrderBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ContactType extends AbstractType
+class CheckAvailability extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', 'email');
-        $builder->add('message', 'textarea');
+        $builder->add('model', 'text');
+        $builder->add('color_code', 'text');
+        $builder->add('size', 'text');
     }
 
     public function getName()

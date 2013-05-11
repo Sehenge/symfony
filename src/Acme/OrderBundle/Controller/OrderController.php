@@ -2,6 +2,7 @@
 
 namespace Acme\OrderBundle\Controller;
 
+use Acme\OrderBundle\Form\CheckAvailability;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Acme\DemoBundle\Form\ContactType;
@@ -18,16 +19,45 @@ class OrderController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $form = $this->get('form.factory')->create(new CheckAvailability());
+
+        return array('form' => $form->createView());
     }
 
     /**
-     * @Route("/hello/{name}", name="_demo_hello")
+     * @Route("/hello", name="_order_hello")
      * @Template()
      */
-    public function helloAction($name)
+    public function helloAction()
     {
-        return array('name' => $name);
+        $form = $this->get('form.factory')->create(new CheckAvailability());
+
+        $request = $this->get('request');
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                //$this->get('session')->getFlashBag()->set('notice', 'Message sent!');
+                $product = $form->getData();
+            }
+        } else {
+            return new RedirectResponse($this->generateUrl('_welcome'));
+        }
+
+        $_product = $this->getDoctrine()
+            ->getRepository('AcmeOrderBundle:Products')
+            ->findByModel($product['model']);
+
+        if (!$_product) {
+            throw $this->createNotFoundException(
+                'No product found for model '. $product['model']
+            );
+        }
+
+        return array('name' => $_product[0]->getAvailability(),
+        'model' => $product['model'],
+        'size' => $product['size'],
+        'color_code' => $product['color_code'],
+        'form' => $form->createView());
     }
 
     /**

@@ -70,10 +70,26 @@ ul#demo-list a {
 .sf-reset .error {
     color: red;
 }
+#contact_form div {
+    height: 40px;
+}
+#contact_form input[type="text"] {
+    width: 195px;
+    font-size: 18px;
+    border: 1px solid #dadada;
+    background: #fff url(data:image/gif;base64,R0lGODlhAQAFAKIAAPX19e/v7/39/fr6+urq6gAAAAAAAAAAACH5BAAAAAAALAAAAAABAAUAAAMESAEjCQA7) repeat-x left top;
+    padding: 5px 6px;
+    color: #565656;
+}
+#contact_form button {
+    margin: 10px 0 0 0;
+    padding: 0;
+}
 #login label, #contact_form label {
     display: block;
     float: left;
-    width: 90px;
+    min-width: 130px;
+    font-size: 22px;
 }
 .sf-reset ul#menu {
     float: right;

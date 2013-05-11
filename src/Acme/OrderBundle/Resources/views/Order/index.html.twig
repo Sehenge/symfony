@@ -10,44 +10,16 @@
     <h1 class="title">Welcome on <strong>Order Helper</strong> page!</h1>
 
     <div class="symfony-blocks-welcome">
-        <div class="block-quick-tour">
-            <div class="illustration">
-                <img src="{{ asset('bundles/acmeorder/images/welcome-quick-tour.gif') }}" alt="Quick tour" />
-            </div>
-            <a href="http://symfony.com/doc/{{ version }}/quick_tour/index.html" class="sf-button sf-button-selected">
-                <span class="border-l">
-                    <span class="border-r">
-                        <span class="btn-bg">Read the Quick Tour</span>
-                    </span>
-                </span>
-            </a>
-        </div>
-        {% if app.environment == 'dev' %}
-            <div class="block-configure">
-                <div class="illustration">
-                    <img src="{{ asset('bundles/acmeorder/images/welcome-configure.gif') }}" alt="Configure your application" />
-                </div>
-                <a href="{{ path('_configurator_home') }}" class="sf-button sf-button-selected">
-                    <span class="border-l">
-                        <span class="border-r">
-                            <span class="btn-bg">Configure</span>
-                        </span>
-                    </span>
-                </a>
-            </div>
-        {% endif %}
-        <div class="block-demo">
-            <div class="illustration">
-                <img src="{{ asset('bundles/acmeorder/images/welcome-demo.gif') }}" alt="Demo" />
-            </div>
-            <a href="{{ path('_welcome') }}" class="sf-button sf-button-selected">
-                <span class="border-l">
-                    <span class="border-r">
-                        <span class="btn-bg">Run The Demo</span>
-                    </span>
-                </span>
-            </a>
-        </div>
+        <form action="{{ path('_order_hello') }}" method="POST" id="contact_form">
+            {{ form_errors(form) }}
+
+            {{ form_row(form.model) }}
+            {{ form_row(form.color_code) }}
+            {{ form_row(form.size) }}
+
+            {{ form_rest(form) }}
+            <input type="submit" value="Send" class="symfony-button-grey" />
+        </form>
     </div>
 
     <div class="symfony-blocks-help">

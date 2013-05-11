@@ -3,10 +3,11 @@
 {% block head %}
     <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/acmeorder/css/demo.css') }}" />
+    <script type="text/javascript" src="{{ asset('bundles/acmeorder/js/jquery-1.9.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/acmeorder/js/custom.js') }}"></script>
 {% endblock %}
 
 {% block title 'Order Bundle' %}
-
 {% block body %}
     {% for flashMessage in app.session.flashbag.get('notice') %}
         <div class="flash-message">

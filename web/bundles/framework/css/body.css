@@ -50,9 +50,11 @@ build: 56
 }
 .sf-reset h1 {
     font-family: Georgia, "Times New Roman", Times, serif;
-    font-size: 20px;
+    font-size: 26px;
     color: #313131;
     word-break: break-all;
+    border-bottom: 2px solid;
+    margin: 0 0 20px 0;
 }
 .sf-reset li {
     padding-bottom: 10px;

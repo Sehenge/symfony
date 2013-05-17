@@ -43,18 +43,33 @@ class OrderController extends Controller
             return new RedirectResponse($this->generateUrl('_welcome'));
         }
 
-        $_product = $this->getDoctrine()
+        /*$_product = $this->getDoctrine()
             ->getRepository('AcmeOrderBundle:Products')
-            ->findByModel($product['model']);
+            ->findByModel($product['model']);*/
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')
+            ->where($qb->expr()->like('products.model', $qb->expr()->literal('%'.$product['model'].'%')))
+            ->andWhere($qb->expr()->like('products.color_code', $qb->expr()->literal('%'.$product['color_code'].'%')))
+            ->andWhere($qb->expr()->like('products.size', $qb->expr()->literal('%'.$product['size'].'%')))
+            ->getQuery()
+            ->getResult();
 
         if (!$_product) {
             throw $this->createNotFoundException(
-                'No product found for model '. $product['model']
+                'No product found for model '. $product['model'] . ' color code ' . $product['color_code'] .
+                ' and size '. $product['size']
             );
+        }
+        $i = '';
+        $result = array();
+        foreach ($_product as $_prod) {
+
         }
 
         return array('name' => $_product[0]->getAvailability(),
-        'model' => $product['model'],
+        'model' => $_product[0]->getModel(),
         'size' => $product['size'],
         'color_code' => $product['color_code'],
         'form' => $form->createView());

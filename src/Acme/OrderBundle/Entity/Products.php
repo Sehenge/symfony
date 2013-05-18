@@ -45,6 +45,11 @@ class Products
     protected $availability;
 
     /**
+     * @ORM\Column(type="string", length=16)
+     */
+    protected $source;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -144,5 +149,28 @@ class Products
     public function getAvailability()
     {
         return $this->availability;
+    }
+
+    /**
+     * Set source
+     *
+     * @param string $source
+     * @return Products
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+    
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return string 
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }

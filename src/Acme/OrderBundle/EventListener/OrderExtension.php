@@ -26,6 +26,7 @@ class OrderExtension extends \Twig_Extension
     {
         return array(
             'code' => new \Twig_Function_Method($this, 'getCode', array('is_safe' => array('html'))),
+            'helloc' => new \Twig_Function_Method($this, 'getHello', array('is_safe' => array('html'))),
         );
     }
 
@@ -46,6 +47,28 @@ class OrderExtension extends \Twig_Extension
 
 <p><strong>Template Code</strong></p>
 <pre>$template</pre>
+EOF;
+    }
+
+    public function getHello($array)
+    {
+        $string = '';
+        foreach ($array as $elem) {
+            //$string .= $elem;
+            if ($elem->getAvailability() == 'Available') {
+                $string .= '<div class="green">';
+            } else {
+                $string .= '<div>';
+            }
+            $string .= '<strong>' . $elem->getModel() . '</strong> - '
+                . $elem->getColorCode() . ' - '
+                . $elem->getSize() . ' - <strong>'
+                . $elem->getAvailability() . '</strong></div>';
+        }
+
+        return <<<EOF
+        <p><strong>Model - Color Code - Size - Availability</strong></p>
+        <pre>$string</pre>
 EOF;
     }
 

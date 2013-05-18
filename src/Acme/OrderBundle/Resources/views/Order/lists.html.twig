@@ -1,0 +1,16 @@
+{% extends "AcmeOrderBundle::layout.html.twig" %}
+
+{% block title "Symfony " ~ "Lists" %}
+
+{% block content %}
+    <div class="symfony-blocks-welcome">
+        {% set code = helloc(result) %}
+    </div>
+
+    {% if code is defined %}
+        <h2>Models from {{ site }}</h2>
+        <div class="block">
+            <div class="symfony-content">{{ code|raw }}</div>
+        </div>
+    {% endif %}
+{% endblock %}

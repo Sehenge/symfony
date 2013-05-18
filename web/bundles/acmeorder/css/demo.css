@@ -115,3 +115,6 @@ ul#demo-list a {
     white-space: pre;
     font-family: monospace;
 }
+.green, .green strong {
+    color: rgb(46, 184, 68);
+}

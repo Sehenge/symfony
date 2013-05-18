@@ -25,9 +25,9 @@ class OrderController extends Controller
     }
 
     /**
-     * @Route("/hello", name="_order_hello")
-     * @Template()
-     */
+ * @Route("/hello", name="_order_hello")
+ * @Template()
+ */
     public function helloAction()
     {
         $form = $this->get('form.factory')->create(new CheckAvailability());
@@ -69,10 +69,27 @@ class OrderController extends Controller
         }
 
         return array('name' => $_product[0]->getAvailability(),
-        'model' => $_product[0]->getModel(),
-        'size' => $product['size'],
-        'color_code' => $product['color_code'],
-        'form' => $form->createView());
+            'model' => $_product[0]->getModel(),
+            'size' => $product['size'],
+            'color_code' => $product['color_code'],
+            'form' => $form->createView());
+    }
+
+    /**
+     * @Route("/lists/{site}", name="_order_lists")
+     * @Template()
+     */
+    public function listsAction($site)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')
+            ->where($qb->expr()->like('products.source', $qb->expr()->literal($site)))
+            ->getQuery()
+            ->getResult();
+
+        return array('result' => $_product,
+        'site' => $site);
     }
 
     /**

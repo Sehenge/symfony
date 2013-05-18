@@ -63,11 +63,13 @@ EOF;
             $string .= '<strong>' . $elem->getModel() . '</strong> - '
                 . $elem->getColorCode() . ' - '
                 . $elem->getSize() . ' - <strong>'
+                . $elem->getPrice() . ' - '
+                . $elem->getRetailPrice() . ' - '
                 . $elem->getAvailability() . '</strong></div>';
         }
 
         return <<<EOF
-        <p><strong>Model - Color Code - Size - Availability</strong></p>
+        <p><strong>Model - Color Code - Size - Price - R.Price - Availability</strong></p>
         <pre>$string</pre>
 EOF;
     }

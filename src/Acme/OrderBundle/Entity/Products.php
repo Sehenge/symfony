@@ -40,6 +40,26 @@ class Products
     protected $size;
 
     /**
+     * @ORM\Column(type="float")
+     */
+    protected $price;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $retail_price;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    protected $brand;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    protected $modification_date;
+
+    /**
      * @ORM\Column(type="string", length=256)
      */
     protected $availability;
@@ -48,6 +68,11 @@ class Products
      * @ORM\Column(type="string", length=16)
      */
     protected $source;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $add_date;
 
     /**
      * Get id
@@ -172,5 +197,120 @@ class Products
     public function getSource()
     {
         return $this->source;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return Products
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set retail_price
+     *
+     * @param float $retailPrice
+     * @return Products
+     */
+    public function setRetailPrice($retailPrice)
+    {
+        $this->retail_price = $retailPrice;
+    
+        return $this;
+    }
+
+    /**
+     * Get retail_price
+     *
+     * @return float 
+     */
+    public function getRetailPrice()
+    {
+        return $this->retail_price;
+    }
+
+    /**
+     * Set brand
+     *
+     * @param string $brand
+     * @return Products
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    
+        return $this;
+    }
+
+    /**
+     * Get brand
+     *
+     * @return string 
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    /**
+     * Set modification_date
+     *
+     * @param string $modificationDate
+     * @return Products
+     */
+    public function setModificationDate($modificationDate)
+    {
+        $this->modification_date = $modificationDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get modification_date
+     *
+     * @return string 
+     */
+    public function getModificationDate()
+    {
+        return $this->modification_date;
+    }
+
+    /**
+     * Set add_date
+     *
+     * @param \timestamp $addDate
+     * @return Products
+     */
+    public function setAddDate(\timestamp $addDate)
+    {
+        $this->add_date = $addDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get add_date
+     *
+     * @return \timestamp 
+     */
+    public function getAddDate()
+    {
+        return $this->add_date;
     }
 }

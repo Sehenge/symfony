@@ -118,3 +118,19 @@ ul#demo-list a {
 .green, .green strong {
     color: rgb(46, 184, 68);
 }
+.brand {
+    min-width: 120px;
+    display: inline-block;
+}
+.model {
+    min-width: 60px;
+    display: inline-block;
+}
+.price {
+    min-width: 40px;
+    display: inline-block;
+}
+.ccolor {
+    min-width: 60px;
+    display: inline-block;
+}

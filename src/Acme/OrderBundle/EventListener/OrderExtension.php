@@ -60,16 +60,18 @@ EOF;
             } else {
                 $string .= '<div>';
             }
-            $string .= '<strong>' . $elem->getModel() . '</strong> - '
-                . $elem->getColorCode() . ' - '
-                . $elem->getSize() . ' - <strong>'
-                . $elem->getPrice() . ' - '
-                . $elem->getRetailPrice() . ' - '
+            $string .=
+                '<div class="brand">' . $elem->getBrand() . '</div> - <div class="model"><strong>'
+                . $elem->getModel() . '</strong></div> - <div class="ccolor">'
+                . $elem->getColorCode() . '</div> - '
+                . $elem->getSize() . ' - <div class="price"><strong>$'
+                . $elem->getPrice() . '</div> - <div class="price">$'
+                . $elem->getRetailPrice() . '</div> - '
                 . $elem->getAvailability() . '</strong></div>';
         }
 
         return <<<EOF
-        <p><strong>Model - Color Code - Size - Price - R.Price - Availability</strong></p>
+        <p><strong>Brand - Model - Color Code - Size - Price - R.Price - Availability</strong></p>
         <pre>$string</pre>
 EOF;
     }

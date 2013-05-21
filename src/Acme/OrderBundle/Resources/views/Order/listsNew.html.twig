@@ -4,14 +4,13 @@
 
 {% block content %}
     <div class="symfony-blocks-welcome">
-        {% set code = helloc(result, site) %}
+        {% set codenew = hellocnew(new, site) %}
     </div>
 
-    {% if code is defined %}
-        <h2>Models from {{ site }}</h2>
+    {% if codenew is defined %}
+        <h2>New Models from {{ site }}</h2>
         <div class="block">
-            <div class="symfony-content">{{ code|raw }}</div>
+            <div class="symfony-content">{{ codenew|raw }}</div>
         </div>
     {% endif %}
-
 {% endblock %}

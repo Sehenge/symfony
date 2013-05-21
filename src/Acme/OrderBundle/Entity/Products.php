@@ -25,6 +25,10 @@ class Products
      */
     protected $id;
     /**
+     * @ORM\Column(type="integer", length=16)
+     */
+    protected $upc;
+    /**
      * @ORM\Column(type="string", length=256)
      */
     protected $model;
@@ -312,5 +316,28 @@ class Products
     public function getAddDate()
     {
         return $this->add_date;
+    }
+
+    /**
+     * Set upc
+     *
+     * @param integer $upc
+     * @return Products
+     */
+    public function setUpc($upc)
+    {
+        $this->upc = $upc;
+    
+        return $this;
+    }
+
+    /**
+     * Get upc
+     *
+     * @return integer 
+     */
+    public function getUpc()
+    {
+        return $this->upc;
     }
 }

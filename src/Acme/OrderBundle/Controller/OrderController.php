@@ -25,9 +25,9 @@ class OrderController extends Controller
     }
 
     /**
- * @Route("/hello", name="_order_hello")
- * @Template()
- */
+     * @Route("/hello", name="_order_hello")
+     * @Template()
+     */
     public function helloAction()
     {
         $form = $this->get('form.factory')->create(new CheckAvailability());
@@ -76,7 +76,7 @@ class OrderController extends Controller
     }
 
     /**
-     * @Route("/lists/{site}", name="_order_lists")
+     * @Route("/lists/{site}", name="_order_list")
      * @Template()
      */
     public function listsAction($site)
@@ -89,31 +89,23 @@ class OrderController extends Controller
             ->getResult();
 
         return array('result' => $_product,
-        'site' => $site);
+            'site' => strtolower($site));
     }
 
     /**
-     * @Route("/contact", name="_demo_contact")
+     * @Route("/lists/{site}/new", name="_order_lists_new")
      * @Template()
      */
-    public function contactAction()
+    public function listsNewAction($site)
     {
-        $form = $this->get('form.factory')->create(new ContactType());
+        $em = $this->getDoctrine()->getEntityManager();
+        $query = $em->createQuery(
+            'SELECT products FROM AcmeOrderBundle:Products products WHERE products.source = :source ORDER BY products.add_date DESC'
+        )->setParameter('source', strtoupper($site));
 
-        $request = $this->get('request');
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $mailer = $this->get('mailer');
-                // .. setup a message and send it
-                // http://symfony.com/doc/current/cookbook/email.html
+        $_new = $query->getResult();
 
-                $this->get('session')->getFlashBag()->set('notice', 'Message sent!');
-
-                return new RedirectResponse($this->generateUrl('_demo'));
-            }
-        }
-
-        return array('form' => $form->createView());
+        return array('site' => strtolower($site),
+            'new' => $_new);
     }
 }

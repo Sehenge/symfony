@@ -81,6 +81,8 @@ class OrderController extends Controller
      */
     public function listsAction($site)
     {
+        error_reporting(E_ALL);
+        ini_set("display_errors", 1);
         $em = $this->getDoctrine()->getEntityManager();
         $qb = $em->createQueryBuilder();
         $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')

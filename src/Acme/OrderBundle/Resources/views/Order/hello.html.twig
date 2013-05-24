@@ -1,9 +1,16 @@
 {% extends "AcmeOrderBundle::layout.html.twig" %}
 
-{% block title "Symfony " ~ name %}
+{% block title "Symfony" %}
 
 {% block content %}
-    <h1>Product <em>{{ model }}  -- {{ color_code }} -- {{ size }}</em> is <strong>{{ name }}</strong>!</h1>
+    {% set code = availabilitation(result) %}
+
+    {% if code is defined %}
+        <h2>Result of request</h2>
+        <div class="block">
+            <div class="symfony-content">{{ code|raw }}</div>
+        </div>
+    {% endif %}
 
     <div class="symfony-blocks-welcome">
         <form action="{{ path('_order_hello') }}" method="POST" id="contact_form">

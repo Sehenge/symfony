@@ -28,6 +28,7 @@ class OrderExtension extends \Twig_Extension
             'code' => new \Twig_Function_Method($this, 'getCode', array('is_safe' => array('html'))),
             'helloc' => new \Twig_Function_Method($this, 'getHello', array('is_safe' => array('html'))),
             'hellocnew' => new \Twig_Function_Method($this, 'getHelloNew', array('is_safe' => array('html'))),
+            'availabilitation' => new \Twig_Function_Method($this, 'getAvailability', array('is_safe' => array('html'))),
         );
     }
 
@@ -48,6 +49,22 @@ class OrderExtension extends \Twig_Extension
 
 <p><strong>Template Code</strong></p>
 <pre>$template</pre>
+EOF;
+    }
+
+    public function getAvailability($array)
+    {
+        $string = '';
+        foreach ($array as $model) {
+            $string .= $model->getModel() . " - "
+                . $model->getColorCode() . " - "
+                . $model->getSize() . " - "
+                . $model->getAvailability() . "<br />";
+        }
+
+        return <<<EOF
+<p><strong>Results:</strong></p>
+<pre>$string</pre>
 EOF;
     }
 

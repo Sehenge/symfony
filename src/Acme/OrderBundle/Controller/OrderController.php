@@ -49,12 +49,32 @@ class OrderController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')
-            ->where($qb->expr()->like('products.model', $qb->expr()->literal('%'.$product['model'].'%')))
-            ->andWhere($qb->expr()->like('products.color_code', $qb->expr()->literal('%'.$product['color_code'].'%')))
-            ->andWhere($qb->expr()->like('products.size', $qb->expr()->literal('%'.$product['size'].'%')))
-            ->getQuery()
-            ->getResult();
+
+        if (!$product['color_code'] && !$product['size'] && $product['model']) {
+            $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')
+                ->where($qb->expr()->like('products.model', $qb->expr()->literal('%'.$product['model'].'%')))
+                ->getQuery()
+                ->getResult();
+        } else if ($product['color_code'] && $product['model'] && !$product['size']) {
+            $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')
+                ->where($qb->expr()->like('products.model', $qb->expr()->literal('%'.$product['model'].'%')))
+                ->andWhere($qb->expr()->like('products.color_code', $qb->expr()->literal('%'.$product['color_code'].'%')))
+                ->getQuery()
+                ->getResult();
+        } else if (!$product['color_code'] && $product['model'] && $product['size']) {
+            $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')
+                ->where($qb->expr()->like('products.model', $qb->expr()->literal('%'.$product['model'].'%')))
+                ->andWhere($qb->expr()->like('products.size', $qb->expr()->literal('%'.$product['size'].'%')))
+                ->getQuery()
+                ->getResult();
+        } else {
+            $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')
+                ->where($qb->expr()->like('products.model', $qb->expr()->literal('%'.$product['model'].'%')))
+                ->andWhere($qb->expr()->like('products.color_code', $qb->expr()->literal('%'.$product['color_code'].'%')))
+                ->andWhere($qb->expr()->like('products.size', $qb->expr()->literal('%'.$product['size'].'%')))
+                ->getQuery()
+                ->getResult();
+        }
 
         if (!$_product) {
             throw $this->createNotFoundException(
@@ -62,16 +82,8 @@ class OrderController extends Controller
                 ' and size '. $product['size']
             );
         }
-        $i = '';
-        $result = array();
-        foreach ($_product as $_prod) {
 
-        }
-
-        return array('name' => $_product[0]->getAvailability(),
-            'model' => $_product[0]->getModel(),
-            'size' => $product['size'],
-            'color_code' => $product['color_code'],
+        return array('result' => $_product,
             'form' => $form->createView());
     }
 

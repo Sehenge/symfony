@@ -102,7 +102,6 @@ EOF;
                     . $elem->getSize() . ' - <div class="price"><strong>$'
                     . $elem->getPrice() . '</div> - '
                     . $elem->getAvailability() . '</strong></div>';
-                    //. date('Y-m-d H:m:s', date_timestamp_get($elem->getAddDate())) . '</div>';
             } else {
                 $string .=
                     '<div class="brand">' . $elem->getBrand() . '</div> - <div class="model"><strong>'
@@ -148,30 +147,30 @@ EOF;
                         '<div class="brand">' . $elem->getBrand() . '</div> - <div class="model"><strong>'
                         . $elem->getModel() . '</strong></div> - <div class="ccolor">'
                         . $elem->getColorCode() . '</div> - '
-                        . $elem->getSize() . ' - <div class="price"><strong>$'
+                        . $elem->getSize() . ' - <div class="price">$'
                         . $elem->getPrice() . '</div> - <div class="price">$'
-                        . $elem->getRetailPrice() . '</div> - '
-                        . $elem->getAvailability() . '</strong> - '
-                        . date('Y-m-d H:m:s', date_timestamp_get($elem->getAddDate())) . '</div>';
+                        . $elem->getRetailPrice() . '</div> - <strong>'
+                        . $elem->getAvailability() . '</strong> - <div class="add_date">'
+                        . date('Y-m-d', date_timestamp_get($elem->getAddDate())) . '</div></div>';
                 } else if ($site == 'mysafilo') {
                     $string .=
                         $elem->getUpc() . ' - '
                         .'<div class="brand">' . $elem->getBrand() . '</div> - <div class="model"><strong>'
                         . $elem->getModel() . '</strong></div> - <div class="ccolor">'
                         . $elem->getColorCode() . '</div> - '
-                        . $elem->getSize() . ' - <div class="price"><strong>$'
-                        . $elem->getPrice() . '</div> - '
-                        . $elem->getAvailability() . '</strong> - '
-                        . date('Y-m-d H:m:s', date_timestamp_get($elem->getAddDate())) . '</div>';
+                        . $elem->getSize() . ' - <div class="price">$'
+                        . $elem->getPrice() . '</div> - <strong>'
+                        . $elem->getAvailability() . '</strong> - <div class="add_date">'
+                        . date('Y-m-d', date_timestamp_get($elem->getAddDate())) . '</div></div>';
                 } else {
                     $string .=
                         '<div class="brand">' . $elem->getBrand() . '</div> - <div class="model"><strong>'
                         . $elem->getModel() . '</strong></div> - <div class="ccolor">'
                         . $elem->getColorCode() . '</div> - '
-                        . $elem->getSize() . ' - <div class="price"><strong>$'
-                        . $elem->getPrice() . '</div> - '
-                        . $elem->getAvailability() . '</strong> - '
-                        . date('Y-m-d H:m:s', date_timestamp_get($elem->getAddDate())) . '</div>';
+                        . $elem->getSize() . ' - <div class="price">$'
+                        . $elem->getPrice() . '</div> - <strong>'
+                        . $elem->getAvailability() . '</strong> - <div class="add_date">'
+                        . date('Y-m-d', date_timestamp_get($elem->getAddDate())) . '</div></div>';
                 }
             }
         }

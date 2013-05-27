@@ -134,3 +134,8 @@ ul#demo-list a {
     min-width: 60px;
     display: inline-block;
 }
+.add_date {
+    min-width: 60px;
+    display: inline-block;
+    float: right;
+}

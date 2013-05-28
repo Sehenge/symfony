@@ -92,7 +92,11 @@ EOF;
                     . $elem->getSize() . ' - <div class="price"><strong>$'
                     . $elem->getPrice() . '</div> - <div class="price">$'
                     . $elem->getRetailPrice() . '</div> - '
-                    . $elem->getAvailability() . '</strong></div>';
+                    . $elem->getAvailability() . '</strong> ';
+                if ($elem->getImage()) {
+                    $string .= '<a class="model_img" rel="' . $elem->getImage() . '">Show image</a>';
+                }
+                $string .= '</div>';
             } else if ($site == 'mysafilo') {
                 $string .=
                     $elem->getUpc() . ' - '

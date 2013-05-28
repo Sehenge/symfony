@@ -74,6 +74,11 @@ class Products
     protected $source;
 
     /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $image;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $add_date;
@@ -339,5 +344,28 @@ class Products
     public function getUpc()
     {
         return $this->upc;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Products
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

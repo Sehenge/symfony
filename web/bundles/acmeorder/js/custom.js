@@ -15,4 +15,8 @@ $(window).load(function() {
         '</span>' +
         '</span>' +
         '</button>');
+    $('.model_img').click(function() {
+        $(this).empty();
+        $(this).append('<img src="' + $(this).attr("rel") + '" width="400px"/>');
+    })
 })

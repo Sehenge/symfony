@@ -105,7 +105,11 @@ EOF;
                     . $elem->getColorCode() . '</div> - '
                     . $elem->getSize() . ' - <div class="price"><strong>$'
                     . $elem->getPrice() . '</div> - '
-                    . $elem->getAvailability() . '</strong></div>';
+                    . $elem->getAvailability() . '</strong>';
+                if ($elem->getImage()) {
+                    $string .= '<a class="model_img" rel="' . $elem->getImage() . '">Show image</a>';
+                }
+                $string .= '</div>';
             } else {
                 $string .=
                     '<div class="brand">' . $elem->getBrand() . '</div> - <div class="model"><strong>'
@@ -113,7 +117,11 @@ EOF;
                     . $elem->getColorCode() . '</div> - '
                     . $elem->getSize() . ' - <div class="price"><strong>$'
                     . $elem->getPrice() . '</div> - '
-                    . $elem->getAvailability() . '</strong></div>';
+                    . $elem->getAvailability() . '</strong>';
+                if ($elem->getImage()) {
+                    $string .= '<a class="model_img" rel="' . $elem->getImage() . '">Show image</a>';
+                }
+                $string .= '</div>';
             }
         }
 

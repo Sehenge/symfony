@@ -122,4 +122,24 @@ class OrderController extends Controller
         return array('site' => strtolower($site),
             'new' => $_new);
     }
+
+    /**
+     * @Route("/history/", name="_order_history")
+     * @Template()
+     */
+    public function historyAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $_product = $qb->select('timeline.id, timeline.product_id, timeline.availability, products.brand, products.model')
+            ->from('Acme\OrderBundle\Entity\Timeline', 'timeline')
+            ->innerJoin('Acme\OrderBundle\Entity\Products', 'products')
+            ->where($qb->expr()->like('timeline.availability', $qb->expr()->literal('Available')))
+            ->andWhere($qb->expr()->eq('products.id', 'timeline.product_id'))
+            ->getQuery()
+            ->getResult();
+        var_dump($_product);die(1);
+
+        return array('result' => $_product);
+    }
 }

@@ -6,3 +6,8 @@ _order:
     resource: "@AcmeOrderBundle/Controller/OrderController.php"
     type:     annotation
     prefix:   /order
+
+_order:
+    resource: "@AcmeOrderBundle/Controller/OrderController.php"
+    type:     annotation
+    prefix:   /order

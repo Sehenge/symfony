@@ -27,6 +27,7 @@ class OrderExtension extends \Twig_Extension
         return array(
             'code' => new \Twig_Function_Method($this, 'getCode', array('is_safe' => array('html'))),
             'helloc' => new \Twig_Function_Method($this, 'getHello', array('is_safe' => array('html'))),
+            'history' => new \Twig_Function_Method($this, 'getHistory', array('is_safe' => array('html'))),
             'hellocnew' => new \Twig_Function_Method($this, 'getHelloNew', array('is_safe' => array('html'))),
             'availabilitation' => new \Twig_Function_Method($this, 'getAvailability', array('is_safe' => array('html'))),
         );
@@ -211,6 +212,23 @@ EOF;
     protected function getTemplateCode($template)
     {
         return $this->loader->getSource($template->getTemplateName());
+    }
+
+    /**
+     * @param $array
+     *
+     * @return string
+     */
+    public function getHistory($array)
+    {
+        $string = '';
+        foreach($array as $row) {
+            $string .= $row->getId();
+        }
+
+        return <<<EOF
+        <pre>$string</pre>
+EOF;
     }
 
     /**

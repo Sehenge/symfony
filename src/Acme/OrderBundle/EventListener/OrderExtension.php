@@ -28,6 +28,7 @@ class OrderExtension extends \Twig_Extension
             'code' => new \Twig_Function_Method($this, 'getCode', array('is_safe' => array('html'))),
             'helloc' => new \Twig_Function_Method($this, 'getHello', array('is_safe' => array('html'))),
             'history' => new \Twig_Function_Method($this, 'getHistory', array('is_safe' => array('html'))),
+            'getbrands' => new \Twig_Function_Method($this, 'getBrands', array('is_safe' => array('html'))),
             'hellocnew' => new \Twig_Function_Method($this, 'getHelloNew', array('is_safe' => array('html'))),
             'availabilitation' => new \Twig_Function_Method($this, 'getAvailability', array('is_safe' => array('html'))),
         );
@@ -106,7 +107,7 @@ EOF;
                     . $elem->getColorCode() . '</div> - '
                     . $elem->getSize() . ' - <div class="price"><strong>$'
                     . $elem->getPrice() . '</div> - '
-                    . $elem->getAvailability() . '</strong>';
+                    . $elem->getAvailability() . '</strong> ';
                 if ($elem->getImage()) {
                     $string .= '<a class="model_img" rel="' . $elem->getImage() . '">Show image</a>';
                 }
@@ -118,7 +119,7 @@ EOF;
                     . $elem->getColorCode() . '</div> - '
                     . $elem->getSize() . ' - <div class="price"><strong>$'
                     . $elem->getPrice() . '</div> - '
-                    . $elem->getAvailability() . '</strong>';
+                    . $elem->getAvailability() . '</strong> ';
                 if ($elem->getImage()) {
                     $string .= '<a class="model_img" rel="' . $elem->getImage() . '">Show image</a>';
                 }
@@ -225,6 +226,20 @@ EOF;
         foreach($array as $row) {
             $string .= $row->getId();
         }
+
+        return <<<EOF
+        <pre>$string</pre>
+EOF;
+    }
+
+    public function getBrands($array)
+    {
+        $string = '<div class="sdiv"><span class="slabel">Brand</span><select id=brands onchange="getModelsByBrand($(this).val())">';
+        //var_dump($array);die(1);
+        foreach($array as $row) {
+            $string .= '<option>' . $row['brand'] . '</option>';
+        }
+        $string .= '</select></div>';
 
         return <<<EOF
         <pre>$string</pre>

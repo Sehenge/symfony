@@ -4,12 +4,15 @@
 
 {% block content %}
     <div class="symfony-blocks-welcome">
-        {% set code = history(result) %}
+        {% set brands = getbrands(brands) %}
     </div>
-
-    {% if code is defined %}
+    {% if brands is defined %}
         <div class="block">
-            <div class="symfony-content">{{ code|raw }}</div>
+            <div class="symfony-content">{{ brands|raw }}</div>
         </div>
     {% endif %}
+    <h1>Timeline</h1>
+    <div class="block">
+        <div class="symfony-content timeline"></div>
+    </div>
 {% endblock %}

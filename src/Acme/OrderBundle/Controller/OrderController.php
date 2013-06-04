@@ -4,6 +4,8 @@ namespace Acme\OrderBundle\Controller;
 
 use Acme\OrderBundle\Form\CheckAvailability;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\Form\Tests\Extension\Core\DataTransformer\BooleanToStringTransformerTest;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Acme\DemoBundle\Form\ContactType;
 
@@ -131,15 +133,129 @@ class OrderController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $_product = $qb->select('timeline.id, timeline.product_id, timeline.availability, products.brand, products.model')
+
+        $_brands = $qb->select('DISTINCT p.brand')
+            ->from('Acme\OrderBundle\Entity\Products', 'p')
+            ->orderBy('p.brand', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $qb = $em->createQueryBuilder();
+
+        /*$_product = $qb->select('timeline.id, timeline.product_id, timeline.availability, products.brand, products.model')
             ->from('Acme\OrderBundle\Entity\Timeline', 'timeline')
             ->innerJoin('Acme\OrderBundle\Entity\Products', 'products')
-            ->where($qb->expr()->like('timeline.availability', $qb->expr()->literal('Available')))
+            ->where($qb->expr()->like('products.brand', $qb->expr()->literal('ANNE KLEIN')))
             ->andWhere($qb->expr()->eq('products.id', 'timeline.product_id'))
             ->getQuery()
             ->getResult();
-        var_dump($_product);die(1);
+        var_dump($_product);die(1);*/
 
-        return array('result' => $_product);
+        return array('brands' => $_brands);
+    }
+
+    /**
+     * @Route("/getmodels/")
+     */
+    public function getModelsAction()
+    {
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            if ($this->getRequest()->get('brand')) {
+                $brand = $this->getRequest()->get('brand');
+                $em = $this->getDoctrine()->getEntityManager();
+                $qb = $em->createQueryBuilder();
+                $_models = $qb->select('DISTINCT products.model')
+                    ->from('Acme\OrderBundle\Entity\Products', 'products')
+                    ->where($qb->expr()->like('products.brand', $qb->expr()->literal($brand)))
+                    ->orderBy('products.model', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+
+                $qb = $em->createQueryBuilder();
+                $_timeline = $qb->select('products.color_code, products.size, timeline.availability, timeline.event_date, products.brand, products.model')
+                    ->from('Acme\OrderBundle\Entity\Timeline', 'timeline')
+                    ->innerJoin('Acme\OrderBundle\Entity\Products', 'products')
+                    ->where($qb->expr()->like('products.brand', $qb->expr()->literal($brand)))
+                    ->andWhere($qb->expr()->eq('products.id', 'timeline.product_id'))
+                    ->getQuery()
+                    ->getResult();
+
+                return new \Symfony\Component\HttpFoundation\Response(json_encode(array('models' => $_models,
+                    'timeline' => $_timeline)));
+            } else if ($this->getRequest()->get('model') && !$this->getRequest()->get('color') && !$this->getRequest()->get('size')) {
+                $model = $this->getRequest()->get('model');
+                $em = $this->getDoctrine()->getEntityManager();
+                $qb = $em->createQueryBuilder();
+
+                $_models = $qb->select('DISTINCT products.color_code')
+                    ->from('Acme\OrderBundle\Entity\Products', 'products')
+                    ->where($qb->expr()->eq('products.model', $qb->expr()->literal($model)))
+                    ->orderBy('products.color_code', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+
+                $qb = $em->createQueryBuilder();
+                $_timeline = $qb->select('products.color_code, products.size, timeline.availability, timeline.event_date, products.brand, products.model')
+                    ->from('Acme\OrderBundle\Entity\Timeline', 'timeline')
+                    ->innerJoin('Acme\OrderBundle\Entity\Products', 'products')
+                    ->where($qb->expr()->eq('products.model', $qb->expr()->literal($model)))
+                    ->andWhere($qb->expr()->eq('products.id', 'timeline.product_id'))
+                    ->getQuery()
+                    ->getResult();
+
+                return new \Symfony\Component\HttpFoundation\Response(json_encode(array('models' => $_models,
+                    'timeline' => $_timeline)));
+
+            } else if ($this->getRequest()->get('model') && $this->getRequest()->get('color') && !$this->getRequest()->get('size')) {
+                $model = $this->getRequest()->get('model');
+                $color_code = $this->getRequest()->get('color');
+                $em = $this->getDoctrine()->getEntityManager();
+                $qb = $em->createQueryBuilder();
+
+                $_models = $qb->select('products.size')
+                    ->from('Acme\OrderBundle\Entity\Products', 'products')
+                    ->where($qb->expr()->eq('products.model', $qb->expr()->literal($model)))
+                    ->andWhere($qb->expr()->eq('products.color_code', $qb->expr()->literal($color_code)))
+                    ->orderBy('products.size', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+
+                $qb = $em->createQueryBuilder();
+                $_timeline = $qb->select('products.color_code, products.size, timeline.availability, timeline.event_date, products.brand, products.model')
+                    ->from('Acme\OrderBundle\Entity\Timeline', 'timeline')
+                    ->innerJoin('Acme\OrderBundle\Entity\Products', 'products')
+                    ->where($qb->expr()->eq('products.model', $qb->expr()->literal($model)))
+                    ->andWhere($qb->expr()->eq('products.color_code', $qb->expr()->literal($color_code)))
+                    ->andWhere($qb->expr()->eq('products.id', 'timeline.product_id'))
+                    ->getQuery()
+                    ->getResult();
+
+                return new \Symfony\Component\HttpFoundation\Response(json_encode(array('models' => $_models,
+                    'timeline' => $_timeline)));
+
+            } else if ($this->getRequest()->get('size')) {
+                $model = $this->getRequest()->get('model');
+                $color_code = $this->getRequest()->get('color');
+                $size = $this->getRequest()->get('size');
+                $em = $this->getDoctrine()->getEntityManager();
+                $qb = $em->createQueryBuilder();
+
+                $qb = $em->createQueryBuilder();
+                $_timeline = $qb->select('products.color_code, products.size, timeline.availability, timeline.event_date, products.brand, products.model')
+                    ->from('Acme\OrderBundle\Entity\Timeline', 'timeline')
+                    ->innerJoin('Acme\OrderBundle\Entity\Products', 'products')
+                    ->where($qb->expr()->eq('products.model', $qb->expr()->literal($model)))
+                    ->andWhere($qb->expr()->eq('products.color_code', $qb->expr()->literal($color_code)))
+                    ->andWhere($qb->expr()->eq('products.size', $qb->expr()->literal($size)))
+                    ->andWhere($qb->expr()->eq('products.id', 'timeline.product_id'))
+                    ->getQuery()
+                    ->getResult();
+
+                return new \Symfony\Component\HttpFoundation\Response(json_encode(array('timeline' => $_timeline)));
+
+            }
+        } else {
+            return new \Symfony\Component\HttpFoundation\Response((string)false);
+        }
     }
 }

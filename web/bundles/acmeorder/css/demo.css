@@ -112,6 +112,7 @@ ul#demo-list a {
     text-decoration: underline;
 }
 .sf-reset .symfony-content pre {
+    overflow: hidden;
     white-space: pre;
     font-family: monospace;
 }
@@ -138,4 +139,11 @@ ul#demo-list a {
     min-width: 60px;
     display: inline-block;
     float: right;
+}
+.sdiv {
+    margin: 0 5px 0 5px !important;
+    float: left;
+}
+.slabel {
+    display: block;
 }

@@ -251,9 +251,8 @@ EOF;
     {
         $string = '<div class="amazon_price_div">';
         $string .= '<div class=a_head><span>Asin</span><span>Landed Price</span><span>Listing Price</span><span>Regular Price</span></div>';
-        //var_dump($array);die(1);
         foreach($array as $row) {
-            $string .= '<div class=inner><span>' . $row->getAsin() . '</span><span>' . $row->getLandedPrice() . '</span><span>' . $row->getListingPrice() . '</span><span>' . $row->getRegularPrice() . '</span></div>';
+            $string .= '<div class=inner><span><a href="http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=' . $row->getAsin() . '" target="_blank">' . $row->getAsin() . '</a></span><span>' . $row->getLandedPrice() . '</span><span>' . $row->getListingPrice() . '</span><span>' . $row->getRegularPrice() . '</span></div>';
         }
         $string .= '</div>';
 

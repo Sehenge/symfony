@@ -29,6 +29,7 @@ class OrderExtension extends \Twig_Extension
             'helloc' => new \Twig_Function_Method($this, 'getHello', array('is_safe' => array('html'))),
             'history' => new \Twig_Function_Method($this, 'getHistory', array('is_safe' => array('html'))),
             'getbrands' => new \Twig_Function_Method($this, 'getBrands', array('is_safe' => array('html'))),
+            'getprices' => new \Twig_Function_Method($this, 'getPrices', array('is_safe' => array('html'))),
             'hellocnew' => new \Twig_Function_Method($this, 'getHelloNew', array('is_safe' => array('html'))),
             'availabilitation' => new \Twig_Function_Method($this, 'getAvailability', array('is_safe' => array('html'))),
         );
@@ -240,6 +241,21 @@ EOF;
             $string .= '<option>' . $row['brand'] . '</option>';
         }
         $string .= '</select></div>';
+
+        return <<<EOF
+        <pre>$string</pre>
+EOF;
+    }
+
+    public function getPrices($array)
+    {
+        $string = '<div class="amazon_price_div">';
+        $string .= '<div class=a_head><span>Asin</span><span>Landed Price</span><span>Listing Price</span><span>Regular Price</span></div>';
+        //var_dump($array);die(1);
+        foreach($array as $row) {
+            $string .= '<div class=inner><span>' . $row->getAsin() . '</span><span>' . $row->getLandedPrice() . '</span><span>' . $row->getListingPrice() . '</span><span>' . $row->getRegularPrice() . '</span></div>';
+        }
+        $string .= '</div>';
 
         return <<<EOF
         <pre>$string</pre>

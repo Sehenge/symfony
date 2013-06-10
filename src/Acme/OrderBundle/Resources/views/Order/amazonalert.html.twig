@@ -1,0 +1,13 @@
+{% extends "AcmeOrderBundle::layout.html.twig" %}
+
+{% block title "Symfony " ~ "Lists" %}
+
+{% block content %}
+    {% set prices = getprices(prices) %}
+    <h1>Hello World!</h1>
+    {% if prices is defined %}
+        <div class="block">
+            <div class="symfony-content">{{ prices|raw }}</div>
+        </div>
+    {% endif %}
+{% endblock %}

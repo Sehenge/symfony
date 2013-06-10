@@ -97,7 +97,7 @@ class OrderController extends Controller
     {
         error_reporting(E_ALL);
         ini_set("display_errors", 1);
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
         $_product = $qb->select('products')->from('Acme\OrderBundle\Entity\Products', 'products')
             ->where($qb->expr()->like('products.source', $qb->expr()->literal($site)))
@@ -114,7 +114,7 @@ class OrderController extends Controller
      */
     public function listsNewAction($site)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
             'SELECT products FROM AcmeOrderBundle:Products products WHERE products.source = :source ORDER BY products.add_date DESC'
         )->setParameter('source', strtoupper($site));
@@ -131,7 +131,7 @@ class OrderController extends Controller
      */
     public function historyAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
 
         $_brands = $qb->select('DISTINCT p.brand')
@@ -152,6 +152,23 @@ class OrderController extends Controller
         var_dump($_product);die(1);*/
 
         return array('brands' => $_brands);
+    }
+
+    /**
+     * @Route("/amazonalert/", name="_order_amazonalert")
+     * @Template()
+     */
+    public function amazonAlertAction()
+    {
+        $em = $this->getDoctrine()->getManager('amazon');
+        $qb = $em->createQueryBuilder();
+
+        $_productPrices = $qb->select('pp')
+            ->from('Acme\OrderBundle\Entity\AmazonProductsPrice', 'pp')
+            ->getQuery()
+            ->getResult();
+
+        return array('prices' => $_productPrices);
     }
 
     /**

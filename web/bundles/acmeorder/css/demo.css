@@ -147,3 +147,16 @@ ul#demo-list a {
 .slabel {
     display: block;
 }
+.amazon_price_div span {
+    margin: 0 40px 0 40px;
+    width: 120px;
+    display: inline-block;
+}
+.amazon_price_div div.a_head {
+    border-bottom: 1px solid gray;
+}
+.amazon_price_div div.a_head span{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}

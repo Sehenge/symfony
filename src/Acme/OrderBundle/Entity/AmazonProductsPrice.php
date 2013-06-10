@@ -49,6 +49,16 @@ class AmazonProductsPrice
     protected $asin;
 
     /**
+     * @ORM\Column(type="string", length=128)
+     */
+    protected $brand;
+
+    /**
+     * @ORM\Column(type="string", length=128)
+     */
+    protected $model;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -171,5 +181,51 @@ class AmazonProductsPrice
     public function getAsin()
     {
         return $this->asin;
+    }
+
+    /**
+     * Set brand
+     *
+     * @param string $brand
+     * @return AmazonProductsPrice
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    
+        return $this;
+    }
+
+    /**
+     * Get brand
+     *
+     * @return string 
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    /**
+     * Set model
+     *
+     * @param string $model
+     * @return AmazonProductsPrice
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+    
+        return $this;
+    }
+
+    /**
+     * Get model
+     *
+     * @return string 
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 }

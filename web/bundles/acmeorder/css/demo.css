@@ -114,7 +114,6 @@ ul#demo-list a {
 .sf-reset .symfony-content pre {
     overflow: hidden;
     white-space: pre;
-    font-family: monospace;
 }
 .green, .green strong {
     color: rgb(46, 184, 68);
@@ -149,7 +148,6 @@ ul#demo-list a {
 }
 .amazon_price_div span {
     margin: 0 40px 0 40px;
-    width: 120px;
     display: inline-block;
 }
 .amazon_price_div div.a_head {

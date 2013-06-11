@@ -7,7 +7,7 @@ _order:
     type:     annotation
     prefix:   /order
 
-_order:
-    resource: "@AcmeOrderBundle/Controller/OrderController.php"
+_sync:
+    resource: "@AcmeSyncBundle/Controller/SyncController.php"
     type:     annotation
-    prefix:   /order
+    prefix:   /sync

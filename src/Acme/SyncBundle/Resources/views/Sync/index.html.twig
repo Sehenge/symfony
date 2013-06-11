@@ -1,0 +1,78 @@
+{% extends 'AcmeSyncBundle::layout.html.twig' %}
+
+{% block title %}Symfony - Welcome{% endblock %}
+
+{% block content_header '' %}
+
+{% block content %}
+    {% set version = constant('Symfony\\Component\\HttpKernel\\Kernel::MAJOR_VERSION') ~ '.' ~ constant('Symfony\\Component\\HttpKernel\\Kernel::MINOR_VERSION')%}
+
+    <h1 class="title">Welcome on <strong>SyncPRO</strong> page!</h1>
+
+    <div class="symfony-blocks-welcome">
+        <ul>
+            <li><span class="ewcfeedcheck" style="color: red; font-weight: bold;">{{ ewcfeed }}</span></li>
+            <li><span class="exbfeedcheck" style="color: red; font-weight: bold;">{{ exbfeed }}</span></li>
+            <li><span class="shdxfeedcheck" style="color: red; font-weight: bold;">{{ shdxfeed }}</span></li>
+            <li><span class="exbwfeedcheck" style="color: red; font-weight: bold;">{{ exbwfeed }}</span></li>
+        </ul>
+        <div class="syncPRO">
+            <button type="submit" class="sf-button" id="getEwc" onclick="getEwcFeed()">
+                <span class="border-l">
+                    <span class="border-r">
+                        <span class="btn-bg">Download EWC Feed</span>
+                    </span>
+                </span>
+            </button>
+            <button type="submit" class="sf-button" id="toExb" onclick="importToExb()">
+                <span class="border-l">
+                    <span class="border-r">
+                        <span class="btn-bg">Import to Exboutique</span>
+                    </span>
+                </span>
+            </button>
+            <button type="submit" class="sf-button" id="toShdx" onclick="importToShdx()">
+                <span class="border-l">
+                    <span class="border-r">
+                        <span class="btn-bg">Import to Shadesexpo</span>
+                    </span>
+                </span>
+            </button>
+            <button type="submit" class="sf-button" id="toExbW" onclick="importToExbW()">
+                <span class="border-l">
+                    <span class="border-r">
+                        <span class="btn-bg">Import to Exboutique Watches</span>
+                    </span>
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <div class="symfony-blocks-help">
+        <div class="block-documentation">
+            <ul>
+                <li><strong>Resources</strong></li>
+                <li><a href="http://symfony.union-progress.com/order/history">History</a></li>
+                <li><a href="http://symfony.union-progress.com/order/amazonalert">Amazon Alerter</a></li>
+            </ul>
+        </div>
+        <div class="block-documentation-more">
+            <ul>
+                <li><strong>Lists</strong></li>
+                <li><a href="http://symfony.union-progress.com/order/lists/luxottica">LUXOTTICA</a></li>
+                <li><a href="http://symfony.union-progress.com/order/lists/marchon">MARCHON</a></li>
+                <li><a href="http://symfony.union-progress.com/order/lists/marcolin">MARCOLIN</a></li>
+                <li><a href="http://symfony.union-progress.com/order/lists/mysafilo">MYSAFILO</a></li>
+            </ul>
+        </div>
+        <div class="block-community">
+            <ul>
+                <li><strong>New Products</strong></li>
+                <li><a href="http://symfony.union-progress.com/order/lists/luxottica/new">LUXOTTICA</a></li>
+                <li><a href="http://symfony.union-progress.com/order/lists/marchon/new">MARCHON</a></li>
+                <li><a href="http://symfony.union-progress.com/order/lists/marcolin/new">MARCOLIN</a></li>
+                <li><a href="http://symfony.union-progress.com/order/lists/mysafilo/new">MYSAFILO</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -10,12 +10,6 @@
     <h1 class="title">Welcome on <strong>SyncPRO</strong> page!</h1>
 
     <div class="symfony-blocks-welcome">
-        <ul>
-            <li><span class="ewcfeedcheck" style="color: red; font-weight: bold;">{{ ewcfeed }}</span></li>
-            <li><span class="exbfeedcheck" style="color: red; font-weight: bold;">{{ exbfeed }}</span></li>
-            <li><span class="shdxfeedcheck" style="color: red; font-weight: bold;">{{ shdxfeed }}</span></li>
-            <li><span class="exbwfeedcheck" style="color: red; font-weight: bold;">{{ exbwfeed }}</span></li>
-        </ul>
         <div class="syncPRO">
             <button type="submit" class="sf-button" id="getEwc" onclick="getEwcFeed()">
                 <span class="border-l">
@@ -46,6 +40,12 @@
                 </span>
             </button>
         </div>
+        <ul style="margin: 35px 0 0 0;">
+            <li><span class="ewcfeedcheck" style="color: red; font-weight: bold;">{{ ewcfeed }}</span></li>
+            <li><span class="exbfeedcheck" style="color: red; font-weight: bold;">{{ exbfeed }}</span></li>
+            <li><span class="shdxfeedcheck" style="color: red; font-weight: bold;">{{ shdxfeed }}</span></li>
+            <li><span class="exbwfeedcheck" style="color: red; font-weight: bold;">{{ exbwfeed }}</span></li>
+        </ul>
     </div>
 
     <div class="symfony-blocks-help">

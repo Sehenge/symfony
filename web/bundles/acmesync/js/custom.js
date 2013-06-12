@@ -21,13 +21,35 @@ function getEwcFeed() {
 }
 
 function importToExb() {
-    $(".exbfeedcheck").text('Successfully imported to Exboutique').css("color", "green");
+    $.ajax({
+        type: "POST",
+        url: "/sync/importexb/",
+        data: { site: 'exb' }
+    }).done(function( msg ) {
+            console.log(msg);
+            $(".exbfeedcheck").text(msg).css("color", "green");
+        });
 }
 
 function importToShdx() {
-    $(".shdxfeedcheck").text('Successfully imported to Shadesexpo').css("color", "green");
+    $.ajax({
+        type: "POST",
+        url: "/sync/importshdx/",
+        data: { site: 'shdx' }
+    }).done(function( msg ) {
+            console.log(msg);
+            $(".shdxfeedcheck").text(msg).css("color", "green");
+            window.open("http://www.shadesexpo.com/converter/import_all_products.csv");
+        });
 }
 
 function importToExbW() {
-    $(".exbwfeedcheck").text('Successfully imported to Exboutique (watches)').css("color", "green");
+    $.ajax({
+        type: "POST",
+        url: "/sync/importexbw/",
+        data: { site: 'exbw' }
+    }).done(function( msg ) {
+            console.log(msg);
+            $(".exbwfeedcheck").text(msg).css("color", "green");
+        });
 }

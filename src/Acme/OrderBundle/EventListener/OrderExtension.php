@@ -256,13 +256,29 @@ EOF;
             . '<span style="width:280px">' . $row->getBrand() . ' - ' .$row->getModel() . '</span>'
             . '<span style="width:50px">' . $row->getLandedPrice() . '</span>'
             . '<span style="width:50px">' . $row->getListingPrice() . '</span>'
-            . '<span>' . $row->getRegularPrice() . '</span></div>';
+            . '<span>' . $this->checkPrice($row->getBrand(), $row->getRegularPrice()) . '</span></div>';
         }
         $string .= '</div>';
 
         return <<<EOF
         <pre>$string</pre>
 EOF;
+    }
+
+    private function checkPrice($brand, $price)
+    {
+        switch($brand) {
+            case 'Calvin Klein' : $minPrice = 130; break;
+            case 'ADIDAS' : $minPrice = 50; break;
+                default : $minPrice = 0;
+        }
+
+
+        if ($price > $minPrice) {
+            return $price . '!';
+        } else {
+            return $price;
+        }
     }
 
     /**

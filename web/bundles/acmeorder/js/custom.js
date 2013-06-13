@@ -19,6 +19,11 @@ $(window).load(function() {
         $(this).empty();
         $(this).append('<img src="' + $(this).attr("rel") + '" width="400px"/>');
     })
+
+    if ($("span").text().indexOf('!')) {
+        console.log($(this).parent());
+        $(this).parent().css("background-color", "rgb(255, 0, 0)");
+    }
 })
 
 function getModelsByBrand(brand) {

@@ -23,7 +23,9 @@ class SyncController extends Controller
         return array('ewcfeed' => 'No feeds uploaded!',
         'exbfeed' => 'Not imported to Exb',
         'shdxfeed' => 'Not imported to Shdx',
-        'exbwfeed' => 'Not imported to Exb (watches)');
+        'exbwsync' => 'Exb (watches) not synced',
+        'exbsync' => 'Exb not synced',
+        'shdxsync' => 'Shdx not synced');
     }
 
     /**
@@ -38,10 +40,10 @@ class SyncController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
         curl_setopt($ch, CURLOPT_USERPWD, 'sites:restrictedzone');
-        //curl_exec($ch);
+        curl_exec($ch);
         curl_close($ch);
 
-        //sleep(5);
+        sleep(5);
         $cf = curl_init('http://eyewearconnection.com/admin/generator/out.txt');
         curl_setopt($cf, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($cf, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
@@ -64,7 +66,7 @@ class SyncController extends Controller
         $last_id = file_get_contents('http://exboutique.com/import/syncid.php');
 
         $fp = fopen('syncfeeds/exbimport.csv', 'w');
-        if (($handle = fopen("syncfeeds/ewcout.txt", "r")) !== FALSE) {
+        if (($handle = fopen("syncfeeds/ewcout.csv", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 0, "\t")) !== FALSE) {
                 if ($data[2] > $last_id) {
                     $data[18] = '"' . preg_replace("/eyewearconnection/", "affordableluxurygroup", $data[18]) . '"';
@@ -98,7 +100,7 @@ class SyncController extends Controller
         $last_id = file_get_contents('http://www.shadesexpo.com/converter/syncid.php');
 
         $fp = fopen('syncfeeds/shdximport.csv', 'w');
-        if (($handle = fopen("syncfeeds/ewcout.txt", "r")) !== FALSE) {
+        if (($handle = fopen("syncfeeds/ewcout.csv", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 0, "\t")) !== FALSE) {
                 if ($data[2] > $last_id) {
                     $data[18] = '"' . preg_replace("/eyewearconnection/", "affordableluxurygroup", $data[18]) . '"';
@@ -123,18 +125,54 @@ class SyncController extends Controller
     }
 
     /**
-     * @Route("/importexbw/")
+     * @Route("/syncexbw/")
      */
-    public function importExbw()
+    public function syncExbWStatus()
     {
-        $data = file_get_contents('http://www.shadesexpo.com/converter/exbfeedmover.php');
-        $shdxfeedhandle = fopen('syncfeeds/shdxexport.csv', 'w');
-        fwrite($shdxfeedhandle, json_decode($data));
-        fclose($shdxfeedhandle);
-        //die(1);
+        $data = file_get_contents('http://www.shadesexpo.com/sync/watches_statuses.php');
+        $data = json_decode($data);
+        $fp = fopen('syncfeeds/exbwimport.csv', 'w');
+        foreach ($data as $row) {
+            if ($row->status == 1) {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
 
+            fputcsv($fp, array($row->model, $status));
+        }
+        fclose($fp);
+        $tmpFeed = fopen('syncfeeds/exbwimport.csv', 'r');
+        $feed = fread($tmpFeed, filesize('syncfeeds/exbwimport.csv'));
+        fclose($tmpFeed);
 
+        $cs = curl_init('http://exboutique.com/watches/import/syncer.php');
+        curl_setopt($cs, CURLOPT_POST, 1);
+        curl_setopt($cs, CURLOPT_POSTFIELDS, array('exbwfeed' => json_encode($feed)));
+        curl_setopt($cs, CURLOPT_RETURNTRANSFER, 1);
+        curl_exec($cs);
+        curl_close($cs);
 
-        return new \Symfony\Component\HttpFoundation\Response('Successfully imported to Exboutique (watches)');
+        return new \Symfony\Component\HttpFoundation\Response('Exboutique (watches) was successfully synced!');
+    }
+
+    /**
+     * @Route("/syncexb/")
+     */
+    public function syncExbStatus()
+    {
+        file_get_contents('http://exboutique.com/import/syncstatus.php');
+
+        return new \Symfony\Component\HttpFoundation\Response('Exboutique was successfully synced!');
+    }
+
+    /**
+     * @Route("/syncshdx/")
+     */
+    public function syncShdxStatus()
+    {
+        file_get_contents('http://www.shadesexpo.com/sync/index.php');
+
+        return new \Symfony\Component\HttpFoundation\Response('Shadesexpo was successfully synced!');
     }
 }

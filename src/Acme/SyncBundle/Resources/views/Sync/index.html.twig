@@ -9,6 +9,29 @@
 
     <h1 class="title">Welcome on <strong>SyncPRO</strong> page!</h1>
 
+    <div class="windows8">
+        <div class="wBall" id="wBall_1">
+            <div class="wInnerBall">
+            </div>
+        </div>
+        <div class="wBall" id="wBall_2">
+            <div class="wInnerBall">
+            </div>
+        </div>
+        <div class="wBall" id="wBall_3">
+            <div class="wInnerBall">
+            </div>
+        </div>
+        <div class="wBall" id="wBall_4">
+            <div class="wInnerBall">
+            </div>
+        </div>
+        <div class="wBall" id="wBall_5">
+            <div class="wInnerBall">
+            </div>
+        </div>
+    </div>
+
     <div class="symfony-blocks-welcome">
         <div class="syncPRO">
             <button type="submit" class="sf-button" id="getEwc" onclick="getEwcFeed()">
@@ -32,20 +55,40 @@
                     </span>
                 </span>
             </button>
-            <button type="submit" class="sf-button" id="toExbW" onclick="importToExbW()">
+            <br /><br /><br />
+            <button type="submit" class="sf-button" id="exbSyncStatus" onclick="syncExbStatus()">
                 <span class="border-l">
                     <span class="border-r">
-                        <span class="btn-bg">Sync Exboutique Watches</span>
+                        <span class="btn-bg">Sync Exboutique Status</span>
+                    </span>
+                </span>
+            </button>
+            <button type="submit" class="sf-button" id="toExbW" onclick="syncExbWStatus()">
+                <span class="border-l">
+                    <span class="border-r">
+                        <span class="btn-bg">Sync Exboutique Watches Status</span>
+                    </span>
+                </span>
+            </button>
+            <button type="submit" class="sf-button" id="shdxSyncStatus" onclick="syncShdxStatus()">
+                <span class="border-l">
+                    <span class="border-r">
+                        <span class="btn-bg">Sync Shadesexpo Status</span>
                     </span>
                 </span>
             </button>
         </div>
         <ul style="margin: 35px 0 0 0;">
-            <li><span class="ewcfeedcheck" style="color: red; font-weight: bold;">{{ ewcfeed }}</span></li>
-            <li><span class="exbfeedcheck" style="color: red; font-weight: bold;">{{ exbfeed }}</span></li>
+            <li><span class="ewcfeedcheck" style="color: red; font-weight: bold;">{{ ewcfeed }}</span></li><br />
+            <li><span class="exbfeedcheck" style="color: red; font-weight: bold;">{{ exbfeed }}</span></li><br />
             <li><span class="shdxfeedcheck" style="color: red; font-weight: bold;">{{ shdxfeed }}</span></li>
-            <li><span class="exbwfeedcheck" style="color: red; font-weight: bold;">{{ exbwfeed }}</span></li>
+            <br /><br /><br />
+            <li><span class="exbsynccheck" style="color: red; font-weight: bold;">{{ exbsync }}</span></li><br />
+            <li><span class="exbwsynccheck" style="color: red; font-weight: bold;">{{ exbwsync }}</span></li><br />
+            <li><span class="shdxsynccheck" style="color: red; font-weight: bold;">{{ shdxsync }}</span></li>
         </ul>
+
+
     </div>
 
     <div class="symfony-blocks-help">

@@ -267,12 +267,25 @@ EOF;
 
     private function checkPrice($brand, $price)
     {
+        $minPrice = 0;
+        if (($handle = fopen("bundles/acmeorder/min_prices_amazon.csv", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 0, ";")) !== FALSE) {
+                $pattern = '/' . strtolower($brand) . '/';
+                if (preg_match($pattern, strtolower($data[0]))) {
+                    //echo $brand;
+                    $minPrice = $data[1];
+                    //break;
+                }
+            }
+        }
+        fclose($handle);
+/*
         switch($brand) {
             case 'Calvin Klein' : $minPrice = 130; break;
             case 'ADIDAS' : $minPrice = 50; break;
                 default : $minPrice = 0;
         }
-
+*/
 
         if ($price > $minPrice) {
             return $price . '!';

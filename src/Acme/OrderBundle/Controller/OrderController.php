@@ -268,7 +268,8 @@ class OrderController extends Controller
                     ->getQuery()
                     ->getResult();
 
-                return new \Symfony\Component\HttpFoundation\Response('ewcout.txt');
+                return new \Symfony\Component\HttpFoundation\Response(json_encode(array('models' => $_models,
+                    'timeline' => $_timeline)));
 
             }
         } else {

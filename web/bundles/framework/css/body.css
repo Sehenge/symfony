@@ -56,9 +56,6 @@ build: 56
     border-bottom: 2px solid;
     margin: 0 0 20px 0;
 }
-.sf-reset li {
-    padding-bottom: 10px;
-}
 .sf-reset .block {
     -moz-border-radius: 16px;
     -webkit-border-radius: 16px;

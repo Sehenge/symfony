@@ -11,3 +11,8 @@ _sync:
     resource: "@AcmeSyncBundle/Controller/SyncController.php"
     type:     annotation
     prefix:   /sync
+
+_binder:
+    resource: "@AcmeBinderBundle/Controller/BinderController.php"
+    type:     annotation
+    prefix:   /binder

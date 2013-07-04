@@ -1,0 +1,12 @@
+.products {
+    border-collapse: separate !important;
+    border-spacing: 20px 0 !important;
+}
+.products th {
+    text-align: left;
+}
+.sf-reset .block_c {
+    margin-bottom: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #dfdfdf;
+}

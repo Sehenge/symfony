@@ -72,6 +72,7 @@ doctrine:
                 connection:       amazon
                 mappings:
                     AcmeOrderBundle: ~
+                    AcmeBinderBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -80,3 +81,13 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
+parameters:
+    memcache.host: 127.0.0.1
+    memcache.port: 11211
+# add more server entries
+services:
+    memcache:
+        class: Memcache
+        calls:
+            - [ connect, [ %memcache.host%, %memcache.port% ]]

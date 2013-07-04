@@ -1,4 +1,4 @@
-{% extends 'AcmeOrderBundle::layout.html.twig' %}
+{% extends 'AcmeBinderBundle::layout.html.twig' %}
 
 {% block title %}Symfony - Welcome{% endblock %}
 
@@ -6,20 +6,15 @@
 
 {% block content %}
     {% set version = constant('Symfony\\Component\\HttpKernel\\Kernel::MAJOR_VERSION') ~ '.' ~ constant('Symfony\\Component\\HttpKernel\\Kernel::MINOR_VERSION')%}
+    {% set products = parse(products) %}
+    <h1 class="title">Welcome on <strong>BinderPRO</strong> page!</h1>
+    {% if products is defined %}
+        <h2>Result of request - {{ time }}</h2>
+        <div class="block_c">
+            <div class="symfony-content">{{ products|raw }}</div>
+        </div>
+    {% endif %}
 
-    <h1 class="title">Welcome on <strong>Order Helper</strong> page!</h1>
-
-    <div class="symfony-blocks-welcome">
-        <form action="{{ path('_order_hello') }}" method="POST" id="contact_form">
-            {{ form_errors(form) }}
-
-            {{ form_row(form.model) }}
-            {{ form_row(form.color_code) }}
-            {{ form_row(form.size) }}
-
-            {{ form_rest(form) }}
-            <input type="submit" value="Send" class="symfony-button-grey" />
-        </form>
     </div>
 
     <div class="symfony-blocks-help">
@@ -28,7 +23,6 @@
                 <li><strong>Resources</strong></li>
                 <li><a href="http://symfony.union-progress.com/order/history">History</a></li>
                 <li><a href="http://symfony.union-progress.com/order/amazonalert">Amazon Alerter</a></li>
-                <li><a href="http://symfony.union-progress.com/binder">QB Binder</a></li>
             </ul>
         </div>
         <div class="block-documentation-more">

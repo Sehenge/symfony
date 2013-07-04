@@ -160,15 +160,55 @@ class OrderController extends Controller
      */
     public function amazonAlertAction()
     {
-        $em = $this->getDoctrine()->getManager('amazon');
-        $qb = $em->createQueryBuilder();
+        $cache = $this->get('memcache');
+        $mcache = $cache->get('amzprod');
+        if (!$mcache) {
+            $em = $this->getDoctrine()->getManager('amazon');
+            $qb = $em->createQueryBuilder();
 
-        $_productPrices = $qb->select('pp')
-            ->from('Acme\OrderBundle\Entity\AmazonProductsPrice', 'pp')
-            ->getQuery()
-            ->getResult();
+            $_productPrices = $qb->select('pp')
+                ->from('Acme\OrderBundle\Entity\AmazonProductsPrice', 'pp')
+                ->where($qb->expr()->like('pp.fulfillment', $qb->expr()->literal('MERCHANT')))
+                ->getQuery()
+                ->getResult();
+            $cache->set('amzprod', $_productPrices);
 
-        return array('prices' => $_productPrices);
+            return array('prices' => $_productPrices);
+        } else {
+            return array('prices' => $mcache);
+        }
+    }
+
+    /**
+     * @Route("/amazonalert/{asin}")
+     * @Template()
+     */
+    public function changeApprovalAction($asin)
+    {
+        $request = $this->get('request');
+        if ($request->isMethod('POST') && $request->get('approve')) {
+            if ($request->get('approve') === 'accept') {
+                $approve = 1;
+            } else if ($request->get('approve') === 'decline') {
+                $approve = 0;
+            } else {
+                $approve = 2;
+            }
+            $em = $this->getDoctrine()->getManager('amazon');
+            $qb = $em->createQueryBuilder();
+
+            $qb->update('Acme\OrderBundle\Entity\AmazonProductsPrice', 'pp')
+                ->set('pp.approved', $approve)
+                ->where($qb->expr()->like('pp.asin', $qb->expr()->literal($asin)))
+                ->getQuery()
+                ->execute();
+
+            $cache = $this->get('memcache');
+            $cache->delete('amzprod');
+
+            return new \Symfony\Component\HttpFoundation\Response((string) $asin);
+        }
+        return new \Symfony\Component\HttpFoundation\Response((string) false);
     }
 
     /**

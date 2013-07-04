@@ -256,7 +256,8 @@ EOF;
             . '<span style="width:280px">' . $row->getBrand() . ' - ' .$row->getModel() . '</span>'
             . '<span style="width:50px">' . $row->getLandedPrice() . '</span>'
             . '<span style="width:50px">' . $row->getListingPrice() . '</span>'
-            . '<span>' . $this->checkPrice($row->getBrand(), $row->getRegularPrice()) . '</span></div>';
+            . $this->checkPrice($row->getBrand(), $row->getRegularPrice(), $row->getApproved())
+            . '<div class="approve reset">Res</div><div class="approve decline">Dec</div><div class="approve accept">Acc</div></div>';
         }
         $string .= '</div>';
 
@@ -265,16 +266,23 @@ EOF;
 EOF;
     }
 
-    private function checkPrice($brand, $price)
+    private function checkPrice($brand, $price, $approve)
     {
-        $minPrice = 0;
+        $minPrice = 1000;
         if (($handle = fopen("bundles/acmeorder/min_prices_amazon.csv", "r")) !== FALSE) {
+            $bool = false;
             while (($data = fgetcsv($handle, 0, ";")) !== FALSE) {
                 $pattern = '/' . strtolower($brand) . '/';
+                $pattern2 = '/' . strtolower($data[0]) . '/';
                 if (preg_match($pattern, strtolower($data[0]))) {
                     //echo $brand;
-                    $minPrice = $data[1];
-                    //break;
+                    $bool = true;
+                    $minPrice = $data[2];
+                    break;
+                } else if (preg_match($pattern2, strtolower($brand))) {
+                    $bool = true;
+                    $minPrice = $data[2];
+                    break;
                 }
             }
         }
@@ -286,11 +294,31 @@ EOF;
                 default : $minPrice = 0;
         }
 */
-
-        if ($price > $minPrice) {
-            return $price . '!';
+        if ($approve !== 2) {
+            if ($bool) {
+                if (($price < $minPrice) && $approve === 0) {
+                    return '<span style="background-color: red" rel="' . $minPrice . '">' . $price . '</span>';
+                } else {
+                    return '<span rel="' . $minPrice . '">' . $price . '</span>';
+                }
+            } else {
+                if ($approve === 0) {
+                    return '<span style="background-color: red" rel="' . $minPrice . '">' . $price . '</span>';
+                } else {
+                    return '<span rel="' . $minPrice . '">' . $price . '</span>';
+                }
+            }
         } else {
-            return $price;
+            if ($bool) {
+                if ($price < $minPrice) {
+                    return '<span style="background-color: red" rel="' . $minPrice . '">' . $price . '</span>';
+                } else {
+                    return '<span rel="' . $minPrice . '">' . $price . '</span>';
+                }
+            } else {
+                return '<span style="background-color: yellow" rel="' . $minPrice . '">' . $price . '</span>';
+            }
+
         }
     }
 

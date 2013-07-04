@@ -49,6 +49,11 @@ class AmazonProductsPrice
     protected $asin;
 
     /**
+     * @ORM\Column(type="string", length=64)
+     */
+    protected $fulfillment;
+
+    /**
      * @ORM\Column(type="string", length=128)
      */
     protected $brand;
@@ -57,6 +62,11 @@ class AmazonProductsPrice
      * @ORM\Column(type="string", length=128)
      */
     protected $model;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $approved;
 
     /**
      * Get id
@@ -227,5 +237,51 @@ class AmazonProductsPrice
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * Set fulfillment
+     *
+     * @param string $fulfillment
+     * @return AmazonProductsPrice
+     */
+    public function setFulfillment($fulfillment)
+    {
+        $this->fulfillment = $fulfillment;
+    
+        return $this;
+    }
+
+    /**
+     * Get fulfillment
+     *
+     * @return string 
+     */
+    public function getFulfillment()
+    {
+        return $this->fulfillment;
+    }
+
+    /**
+     * Set approved
+     *
+     * @param integer $approved
+     * @return AmazonProductsPrice
+     */
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
+    
+        return $this;
+    }
+
+    /**
+     * Get approved
+     *
+     * @return integer 
+     */
+    public function getApproved()
+    {
+        return $this->approved;
     }
 }

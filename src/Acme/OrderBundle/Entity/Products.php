@@ -301,22 +301,9 @@ class Products
     }
 
     /**
-     * Set add_date
-     *
-     * @param \timestamp $addDate
-     * @return Products
-     */
-    public function setAddDate(\timestamp $addDate)
-    {
-        $this->add_date = $addDate;
-    
-        return $this;
-    }
-
-    /**
      * Get add_date
      *
-     * @return \timestamp 
+     * @return \timestamp
      */
     public function getAddDate()
     {

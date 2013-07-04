@@ -6,15 +6,16 @@
         <entry key="Sehenge">
           <value>
             <LessProfile>
+              <option name="compressOutput" value="true" />
               <option name="cssDirectories">
                 <list>
                   <CssDirectory>
-                    <option name="path" value="C:\Program Files (x86)\Zend\Apache2\htdocs\symfony\web\bundles\acmeorder\css" />
+                    <option name="path" value="H:\Users\Alex\PhpstormProjects\symfony\web\bundles\acmeorder\css" />
                   </CssDirectory>
                 </list>
               </option>
               <option name="includePattern" value="*.less;" />
-              <option name="lessDirPath" value="C:\Program Files (x86)\Zend\Apache2\htdocs\symfony\web\bundles\acmeorder\css" />
+              <option name="lessDirPath" value="H:\Users\Alex\PhpstormProjects\symfony\web\bundles\acmeorder\css" />
               <option name="name" value="Sehenge" />
             </LessProfile>
           </value>

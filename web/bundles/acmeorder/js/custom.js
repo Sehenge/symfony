@@ -6,7 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 
-$(window).load(function() {
+Order = function() {
+    this.approve = $('.approve');
+}
+
+Order.prototype.initEvents = function InitEvents() {
+    var self = this;
     $("#contact_form .symfony-button-grey").remove();
     $("#contact_form").append('<button type="submit" class="sf-button">' +
         '<span class="border-l">' +
@@ -15,16 +20,51 @@ $(window).load(function() {
         '</span>' +
         '</span>' +
         '</button>');
+
     $('.model_img').click(function() {
         $(this).empty();
         $(this).append('<img src="' + $(this).attr("rel") + '" width="400px"/>');
-    })
+    });
 
-    if ($("span").text().indexOf('!')) {
-        console.log($(this).parent());
-        $(this).parent().css("background-color", "rgb(255, 0, 0)");
+    $("span").each(function(){
+        if ($(this).css("background-color") != "rgba(0, 0, 0, 0)") {
+            $(this).parent().css("background-color", $(this).css("background-color"));
+            $(this).css("background-color", "transparent");
+        }
+    });
+
+    $(".inner").hover(
+        function () {
+            var rel = $(this).find($("span[rel]")).attr("rel");
+            $(this).find($("span[rel]")).append($('<span style="display:inline;margin:0;color:green;font-weight:bold;"> ' + rel + '</span>'));
+        },
+        function () {
+            $(this).find("span:last").remove();
+        }
+    );
+
+    this.approve.click(function() {
+        self.setApprove($(this).parent(), $(this).attr("class").split(' '));
+    });
+}
+
+Order.prototype.setApprove = function SetApprove(block, approve) {
+    console.log(block);
+    if (approve[1] == 'decline') {
+        block.css("background-color", "rgba(255, 0, 0, 1)");
+    } else if (approve[1] == 'accept') {
+        block.css("background-color", "rgba(0, 0, 0, 0)");
     }
-})
+    var asin = block.find($("a")).text();
+    var url = "/order/amazonalert/" + asin;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { approve: approve[1]}
+    }).done(function(msg) {
+            console.log(msg);
+        })
+}
 
 function getModelsByBrand(brand) {
     $.ajax({

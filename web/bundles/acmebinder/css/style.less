@@ -1,4 +1,35 @@
-@theme: #555;
-.shadow {
-  box-shadow: 0 1px 2px 1 @theme;
+@pad: 20px;
+#clearCache {
+  cursor: pointer;
+  color: #8a8fff;
+  &:hover {
+    color: #546aff;
+  }
+}
+.products {
+  border-collapse: separate !important;
+  border-spacing: @pad 0 !important;
+  th {
+    text-align: left;
+  }
+}
+.sf-reset .block_c {
+  margin-bottom: @pad;
+  background-color: #FFFFFF;
+  border: 1px solid #dfdfdf;
+}
+.ui-progressbar {
+  position: relative;
+  width: 90%;
+  margin: auto auto !important;
+}
+.progress-label {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #fff;
+}
+.sf-button {
+  margin: 0 0 20px 45px;
 }

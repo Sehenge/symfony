@@ -46,6 +46,12 @@ Order.prototype.initEvents = function InitEvents() {
     this.approve.click(function() {
         self.setApprove($(this).parent(), $(this).attr("class").split(' '));
     });
+
+    /*$("span a").each(function() {
+        if ($(this).text().length < 2) {
+            $(this).parent().parent().remove();
+        }
+    })*/
 }
 
 Order.prototype.setApprove = function SetApprove(block, approve) {

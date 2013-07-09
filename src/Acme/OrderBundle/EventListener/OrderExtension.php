@@ -252,12 +252,14 @@ EOF;
         $string = '<div class="amazon_price_div">';
         $string .= '<div class=a_head><span style="margin-left:0;width:20px;">Asin</span><span style="width:130px">Brand - Model</span><span style="margin:0 0 0 130px">Landed Price</span><span>Listing Price</span><span style="margin:0 0 0 0px">Regular Price</span></div>';
         foreach($array as $row) {
-            $string .= '<div class=inner><span style="margin-left:0;width:20px;"><a href="http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=' . $row->getAsin() . '" target="_blank">' . $row->getAsin() . '</a></span>'
-            . '<span style="width:280px">' . $row->getBrand() . ' - ' .$row->getModel() . '</span>'
-            . '<span style="width:50px">' . $row->getLandedPrice() . '</span>'
-            . '<span style="width:50px">' . $row->getListingPrice() . '</span>'
-            . $this->checkPrice($row->getBrand(), $row->getRegularPrice(), $row->getApproved())
-            . '<div class="approve reset">Res</div><div class="approve decline">Dec</div><div class="approve accept">Acc</div></div>';
+            if (!preg_match('/^(0|1|2)$/', $row->getAsin())) {
+                $string .= '<div class=inner><span style="margin-left:0;width:20px;"><a href="http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=' . $row->getAsin() . '" target="_blank">' . $row->getAsin() . '</a></span>'
+                    . '<span style="width:280px">' . $row->getBrand() . ' - ' .$row->getModel() . '</span>'
+                    . '<span style="width:50px">' . $row->getLandedPrice() . '</span>'
+                    . '<span style="width:50px">' . $row->getListingPrice() . '</span>'
+                    . $this->checkPrice($row->getBrand(), $row->getRegularPrice(), $row->getApproved())
+                    . '<div class="approve reset"></div><div class="approve decline"></div><div class="approve accept"></div></div>';
+            }
         }
         $string .= '</div>';
 
@@ -294,6 +296,9 @@ EOF;
                 default : $minPrice = 0;
         }
 */
+        /**
+         * $approve : 0 - decline, 1 - accept, 2 - not checked
+         */
         if ($approve !== 2) {
             if ($bool) {
                 if (($price < $minPrice) && $approve === 0) {
@@ -318,7 +323,6 @@ EOF;
             } else {
                 return '<span style="background-color: yellow" rel="' . $minPrice . '">' . $price . '</span>';
             }
-
         }
     }
 

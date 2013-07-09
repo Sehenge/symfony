@@ -33,6 +33,7 @@ use Symfony\Component\Config\FileLocator;
 class DoctrineExtension extends AbstractDoctrineExtension
 {
     private $defaultConnection;
+    private $amazonConnection;
     private $entityManagers;
 
     /**
@@ -72,8 +73,10 @@ class DoctrineExtension extends AbstractDoctrineExtension
             $config['default_connection'] = reset($keys);
         }
         $this->defaultConnection = $config['default_connection'];
+        $this->amazonConnection = 'amazon';
 
         $container->setAlias('database_connection', sprintf('doctrine.dbal.%s_connection', $this->defaultConnection));
+        $container->setAlias('amazon_connection', sprintf('doctrine.dbal.%s_connection', $this->amazonConnection));
         $container->setAlias('doctrine.dbal.event_manager', new Alias(sprintf('doctrine.dbal.%s_connection.event_manager', $this->defaultConnection), false));
 
         $container->setParameter('doctrine.dbal.connection_factory.types', $config['types']);

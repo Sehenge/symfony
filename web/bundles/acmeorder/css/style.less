@@ -2,7 +2,25 @@
   display: inline-block;
   float: right;
   cursor: pointer;
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+  &.accept {
+    background: url("/bundles/acmeorder/images/acc.gif");
+  }
+  &.decline {
+    background: url("/bundles/acmeorder/images/dec.gif");
+  }
+  &.reset {
+    background: url("/bundles/acmeorder/images/res.gif");
+  }
+  &:hover {
+    opacity: 1;
+  }
 }
 .sf-reset .block {
   padding: 20px 20px;
+}
+.inner {
+  height: 24px;
 }

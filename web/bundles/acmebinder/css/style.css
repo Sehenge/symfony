@@ -1,12 +1,1 @@
-.products {
-    border-collapse: separate !important;
-    border-spacing: 20px 0 !important;
-}
-.products th {
-    text-align: left;
-}
-.sf-reset .block_c {
-    margin-bottom: 20px;
-    background-color: #FFFFFF;
-    border: 1px solid #dfdfdf;
-}
+#clearCache{cursor:pointer;color:#8a8fff}#clearCache:hover{color:#546aff}.products{border-collapse:separate!important;border-spacing:20px 0!important}.products th{text-align:left}.sf-reset .block_c{margin-bottom:20px;background-color:#fff;border:1px solid #dfdfdf}.ui-progressbar{position:relative;width:90%;margin:auto auto!important}.progress-label{position:absolute;left:50%;top:4px;font-weight:bold;text-shadow:1px 1px 0 #fff}.sf-button{margin:0 0 20px 45px}

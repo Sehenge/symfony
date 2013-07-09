@@ -20,6 +20,22 @@
             </LessProfile>
           </value>
         </entry>
+        <entry key="binderPRO">
+          <value>
+            <LessProfile>
+              <option name="compressOutput" value="true" />
+              <option name="cssDirectories">
+                <list>
+                  <CssDirectory>
+                    <option name="path" value="H:\Users\Alex\PhpstormProjects\symfony\web\bundles\acmebinder\css" />
+                  </CssDirectory>
+                </list>
+              </option>
+              <option name="lessDirPath" value="H:\Users\Alex\PhpstormProjects\symfony\web\bundles\acmebinder\css" />
+              <option name="name" value="binderPRO" />
+            </LessProfile>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

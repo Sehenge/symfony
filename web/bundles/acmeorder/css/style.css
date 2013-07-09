@@ -1,1 +1,1 @@
-.approve{display:inline-block;float:right;cursor:pointer}.sf-reset .block{padding:20px 20px}
+.approve{display:inline-block;float:right;cursor:pointer;width:24px;height:24px;opacity:.5}.approve.accept{background:url("/bundles/acmeorder/images/acc.gif")}.approve.decline{background:url("/bundles/acmeorder/images/dec.gif")}.approve.reset{background:url("/bundles/acmeorder/images/res.gif")}.approve:hover{opacity:1}.sf-reset .block{padding:20px 20px}.inner{height:24px}

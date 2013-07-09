@@ -6,16 +6,17 @@
 
 {% block content %}
     {% set version = constant('Symfony\\Component\\HttpKernel\\Kernel::MAJOR_VERSION') ~ '.' ~ constant('Symfony\\Component\\HttpKernel\\Kernel::MINOR_VERSION')%}
-    {% set products = parse(products, coproducts) %}
-    <h1 class="title">Welcome on <strong>BinderPRO</strong> page!</h1>
-    {% if products is defined %}
-        <h2>Result of request - {{ time }} - <span id=clearCache>Clear cache</span></h2>
-        <div class="block_c">
-            <div class="symfony-content">{{ products|raw }}</div>
-        </div>
-    {% endif %}
 
-    </div>
+    <h1 class="title">Welcome on <strong>BinderPRO</strong> page!</h1>
+    <button type="submit" class="sf-button">
+        <span class="border-l">
+            <span class="border-r">
+                <span class="btn-bg dbLoad">Load Database</span>
+            </span>
+        </span>
+    </button>
+    <div id="progressbar"><div class="progress-label">Loading...</div></div>
+
 
     <div class="symfony-blocks-help">
         <div class="block-documentation">
@@ -48,4 +49,5 @@
         var binder = new Binder();
         binder.initEvents();
     </script>
+    </div>
 {% endblock %}

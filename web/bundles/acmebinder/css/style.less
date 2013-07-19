@@ -12,6 +12,24 @@
   th {
     text-align: left;
   }
+  tr {
+    &.warn {
+      background: #ff7b78;
+    }
+    td {
+      &.buttons {
+        background: white;
+      }
+    }
+  }
+}
+#ebay_temp {
+  tr {
+    cursor: pointer;
+    td.itemid {
+      padding-right: 10px;
+    }
+  }
 }
 .sf-reset .block_c {
   margin-bottom: @pad;
@@ -32,4 +50,21 @@
 }
 .sf-button {
   margin: 0 0 20px 45px;
+}
+.approve {
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+  &.accept {
+    background: url("/bundles/acmebinder/images/acc.gif");
+  }
+  &.decline {
+    background: url("/bundles/acmebinder/images/dec.gif");
+  }
+  &:hover {
+    opacity: 1;
+  }
 }

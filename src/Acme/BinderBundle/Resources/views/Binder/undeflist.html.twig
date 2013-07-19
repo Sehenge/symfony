@@ -6,10 +6,10 @@
 
 {% block content %}
     {% set version = constant('Symfony\\Component\\HttpKernel\\Kernel::MAJOR_VERSION') ~ '.' ~ constant('Symfony\\Component\\HttpKernel\\Kernel::MINOR_VERSION')%}
-    {% set products = parse(products, coproducts) %}
+    {% set products = undeflist(asins) %}
     <h1 class="title">Welcome on <strong>BinderPRO</strong> page!</h1>
     {% if products is defined %}
-        <h2>Result of request - {{ time }} - <span id=clearCache>Clear cache</span></h2>
+        <h2>Result of request</h2>
         <div class="block_c">
             <div class="symfony-content">{{ products|raw }}</div>
         </div>

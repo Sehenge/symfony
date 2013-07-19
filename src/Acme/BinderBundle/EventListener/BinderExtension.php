@@ -28,9 +28,16 @@ class BinderExtension extends \Twig_Extension
     {
         return array(
             'parse' => new \Twig_Function_Method($this, 'parseProducts', array('is_safe' => array('html'))),
+            'parseEbay' => new \Twig_Function_Method($this, 'parseEbay', array('is_safe' => array('html'))),
+            'undeflist' => new \Twig_Function_Method($this, 'parseAsins', array('is_safe' => array('html'))),
         );
     }
 
+    /**
+     * @param $products
+     * @param $coproducts
+     * @return string
+     */
     public function parseProducts($products, $coproducts)
     {
         $mtime = microtime();
@@ -71,14 +78,19 @@ class BinderExtension extends \Twig_Extension
                     }
                 }
                 if (++$i % 2) {
-                    $template .= '<tr class=odd><td>';
+                    $template .= '<tr class="odd';
                 } else {
-                    $template .= '<tr class=even><td>';
+                    $template .= '<tr class="even';
                 }
-                $template .= $row['upc'] . '</td><td>' . $row['desc1'] . '</td><td>' . $row['attribute']
+                $minimum = number_format((($row['cost'] + 30) / 0.85), 2);
+                if (!$this->checkPrice($minimum, $row['regular_price'], $row['approved'])) {
+                    $template .= ' warn';
+                }
+                $template .= '"><td id=upc><a href="http://www.amazon.com/s/ref=nb_sb_noss/185-6549131-8962738?url=search-alias%3Daps&field-keywords=' . $row['upc'] . '" target="_blank">' . $row['upc']
+                    . '</a></td><td>' . $row['desc1'] . '</td><td>' . $row['attribute']
                     . '</td><td>' . $row['size'] . '</td><td>' . $row['quantityonhand'] . '</td><td>'
-                    . $row['quantity']. '</td><td>' . $row['cost'] . '<b style="float:right;">(' . number_format((($row['cost'] + 30) / 0.85), 2) . ')</b>' . '</td><td>' . $row['regular_price'];
-                $template .= '</td></tr>'. "\n";
+                    . $row['quantity']. '</td><td>' . $row['cost'] . '<b style="float:right;">(' . $minimum . ')</b>' . '</td><td>' . $row['regular_price'];
+                $template .= '</td><td class=buttons><div class="approve decline"></div><div class="approve accept"></div></td></tr>'. "\n";
 
                 if (!($i % 10)) {
                     $handle = fopen('file', 'w');
@@ -98,6 +110,48 @@ class BinderExtension extends \Twig_Extension
         $mtime = explode(" ",$mtime);
         $tend = $mtime[1] + $mtime[0];
         $totaltime = round($tend - $tstart, 4);
+
+        return <<<EOF
+$template
+EOF;
+    }
+
+    public function parseEbay($products)
+    {
+        $template = '<table id=ebay_temp>';
+        foreach ($products as $row) {
+            $template .= '<tr><td class=itemid upc="' . $row['upc'] . '">' . $row['itemid'] . '</td><td>' . $row['ebay_name'] . '</td><td>'
+                . $row['desc1'] . '</td><td>'
+                . $row['attribute'] . '</td><td>'
+                . $row['size'] . '</td></tr>';
+        }
+        $template .= '</table>';
+
+        return $template;
+    }
+
+    /**
+     * @param $minimal
+     * @param $price
+     * @param $approve  0 - decline, 1 - accept
+     * @return bool
+     */
+    private function checkPrice($minimal, $price, $approve)
+    {
+        if (!$approve && ($price < $minimal)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function parseAsins($asins)
+    {
+        $template = "";
+
+        foreach ($asins as $asin) {
+            $template .= $asin['asin'] . ' - ' . $asin['model'] . ' - ' . $asin['desc1'] . ' - ' . $asin['attribute'] . ' - ' . $asin['size'] . '<br />';
+        }
 
         return <<<EOF
 $template

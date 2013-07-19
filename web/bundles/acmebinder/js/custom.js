@@ -9,6 +9,8 @@
 Binder = function() {
     this.clearBtn = $("#clearCache");
     this.loadBtn = $(".dbLoad");
+    this.approve = $('.approve');
+    this.ebayTemp = $("#ebay_temp tr")
 }
 
 Binder.prototype.initEvents = function InitEvents() {
@@ -29,7 +31,19 @@ Binder.prototype.initEvents = function InitEvents() {
         }
     });
 
+    this.approve.click(function() {
+        self.setApprove($(this).parent().parent(), $(this).attr("class").split(' '));
+    });
 
+    this.ebayTemp.click(function() {
+        self.ebayCheck($(this));
+    })
+
+    this.ebayTemp.hover(function(){
+        $(this).css("background-color", "#E6E3E3");
+    }, function() {
+        $(this).css("background-color", "#FFFFFF");
+    });
 }
 
 Binder.prototype.clearCache = function ClearCache() {
@@ -69,7 +83,33 @@ Binder.prototype.databaseLoad = function DatabaseLoad() {
                     window.location.replace("http://symfony.union-progress.com/binder/");
                 }
             }).fail(function(msg) {
-                console.log('Fails!!!' + msg);
+                process();
             })
     }
+}
+
+Binder.prototype.setApprove = function SetApprove(block, approve) {
+    console.log(block);
+    if (approve[1] == 'decline') {
+        block.css("background", "#ff7b78");
+    } else {
+        block.css("background", "#ffffff");
+    }
+    var url = "/binder/changeapprove/" + block.find($("td#upc")).text();
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { approve: approve[1]}
+    }).done(function(msg) {
+            console.log(msg);
+        })
+}
+
+Binder.prototype.ebayCheck = function EbayCheck(block) {
+    console.log(block);
+    var upc = block.find($("td.itemid")).attr("upc");
+    var itemId = block.find($("td.itemid")).text();
+
+    console.log(upc);
+    console.log(itemId);
 }

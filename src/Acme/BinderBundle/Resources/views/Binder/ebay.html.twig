@@ -6,15 +6,13 @@
 
 {% block content %}
     {% set version = constant('Symfony\\Component\\HttpKernel\\Kernel::MAJOR_VERSION') ~ '.' ~ constant('Symfony\\Component\\HttpKernel\\Kernel::MINOR_VERSION')%}
-    {% set products = parse(products, coproducts) %}
+    {% set products = parseEbay(products) %}
     <h1 class="title">Welcome on <strong>BinderPRO</strong> page!</h1>
-    {% if products is defined %}
-        <h2>Result of request - {{ time }} - <span id=clearCache>Clear cache</span></h2>
-        <div class="block_c">
-            <div class="symfony-content">{{ products|raw }}</div>
-        </div>
-    {% endif %}
 
+    <h2>Result of request - {{ time }}</h2>
+    <div class="block_c">
+        <div class="symfony-content">{{ products|raw }}</div>
+    </div>
 
     <div class="symfony-blocks-help">
         <div class="block-documentation">
@@ -43,9 +41,11 @@
             </ul>
         </div>
     </div>
-    <script type="text/javascript">
+    </div>
+    <script type=text/javascript>
+
+        $("#content").css("width", "100%");
         var binder = new Binder();
         binder.initEvents();
     </script>
-    </div>
 {% endblock %}
